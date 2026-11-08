@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>TransCompare Promo</title>
+<link rel="stylesheet" href="node_modules/@fontsource/noto-sans-sc/chinese-simplified-500.css">
+<link rel="stylesheet" href="node_modules/@fontsource/noto-sans-sc/chinese-simplified-700.css">
+<link rel="stylesheet" href="node_modules/@fontsource/noto-sans-sc/chinese-simplified-900.css">
+<link rel="stylesheet" href="node_modules/@fontsource/noto-sans-sc/latin-500.css">
+<link rel="stylesheet" href="node_modules/@fontsource/noto-sans-sc/latin-700.css">
+<link rel="stylesheet" href="node_modules/@fontsource/noto-sans-sc/latin-900.css">
+<link rel="stylesheet" href="node_modules/@fontsource/inter/latin-500.css">
+<link rel="stylesheet" href="node_modules/@fontsource/inter/latin-700.css">
+<link rel="stylesheet" href="node_modules/@fontsource/jetbrains-mono/latin-500.css">
+<link rel="stylesheet" href="node_modules/@fontsource/jetbrains-mono/latin-600.css">
+<style>
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #050b22; }
+  #stage { position: relative; width: 1920px; height: 1080px; }
+  canvas { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+  #overlay { position: absolute; inset: 0; pointer-events: none; font-family: "Noto Sans SC", Inter, sans-serif; color: #fff; }
+  .line { position: absolute; left: 0; right: 0; text-align: center; opacity: 0; will-change: transform, opacity; }
+  #cap { bottom: 150px; font-size: 64px; font-weight: 900; letter-spacing: 2px; text-shadow: 0 6px 30px rgba(0,0,0,.45); }
+  #sub { bottom: 92px; font-size: 34px; font-weight: 500; color: #cbd5e1; }
+  #title { top: 700px; font-size: 92px; font-weight: 900; letter-spacing: 3px; text-shadow: 0 8px 40px rgba(0,0,0,.5); }
+  #tag { top: 828px; font-size: 40px; font-weight: 700; color: #fbbf24; letter-spacing: 8px; }
+  #url { top: 902px; font-size: 30px; font-weight: 500; color: #cbd5e1; font-family: "JetBrains Mono", monospace; }
+  #fade { position: absolute; inset: 0; background: #000; opacity: 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="c" width="1920" height="1080"></canvas>
+  <div id="overlay">
+    <div class="line" id="title"></div>
+    <div class="line" id="tag"></div>
+    <div class="line" id="url"></div>
+    <div class="line" id="cap"></div>
+    <div class="line" id="sub"></div>
+    <div id="fade"></div>
+  </div>
+</div>
+<script type="module">
+  import { createScene, TEXT } from './dist/scene.js';
+  // 预加载所有用到的字（Noto Sans SC 按字符分片加载）
+  const all = [...Object.values(TEXT).flat(), '原文 · 中文 ★ 推荐译法 Claude Code 把同一段文字同时交给多个翻译引擎结果并排对比也给出自己的译并推荐最终法插件两条命令安装不填密钥能用：免费默认开启'].join(' ');
+  const specs = ['500 40px "Noto Sans SC"', '700 40px "Noto Sans SC"', '900 40px "Noto Sans SC"',
+                 '500 40px Inter', '700 40px Inter', '500 40px "JetBrains Mono"', '600 40px "JetBrains Mono"'];
+  await Promise.all(specs.map(s => document.fonts.load(s, all)));
+  await document.fonts.ready;
+  const { render } = createScene(document.getElementById('c'), document.getElementById('overlay'));
+  window.renderAt = (t) => render(t);
+  window.ready = true;
+  const q = new URLSearchParams(location.search);
+  if (q.has('play')) { const t0 = performance.now(); const loop = () => { render(((performance.now() - t0) / 1000) % 30); requestAnimationFrame(loop); }; loop(); }
+</script>
+</body>
+</html>
