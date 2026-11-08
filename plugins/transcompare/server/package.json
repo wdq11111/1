@@ -1,0 +1,16 @@
+{
+  "name": "transcompare-mcp",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/index.mjs --bundle --platform=node --format=esm --target=node18 --minify --legal-comments=linked --outfile=dist/index.mjs --banner:js=\"import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);\""
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.6.0",
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

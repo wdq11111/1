@@ -1,0 +1,120 @@
+{
+  "name": "transcompare",
+  "displayName": "译比 TransCompare",
+  "version": "0.1.0",
+  "description": "多引擎翻译对比：同一段文字同时交给 DeepL、Google、微软、百度、有道和大模型翻译，并排比较译文。",
+  "author": {
+    "name": "wdq11111"
+  },
+  "repository": "https://github.com/wdq11111/1",
+  "keywords": [
+    "translation",
+    "translate",
+    "deepl",
+    "i18n",
+    "翻译"
+  ],
+  "mcpServers": {
+    "transcompare": {
+      "command": "node",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/server/dist/index.mjs"
+      ],
+      "env": {
+        "DEEPL_API_KEY": "${user_config.deepl_api_key}",
+        "GOOGLE_API_KEY": "${user_config.google_api_key}",
+        "AZURE_TRANSLATOR_KEY": "${user_config.azure_translator_key}",
+        "AZURE_TRANSLATOR_REGION": "${user_config.azure_translator_region}",
+        "BAIDU_APP_ID": "${user_config.baidu_app_id}",
+        "BAIDU_SECRET": "${user_config.baidu_secret}",
+        "YOUDAO_APP_KEY": "${user_config.youdao_app_key}",
+        "YOUDAO_APP_SECRET": "${user_config.youdao_app_secret}",
+        "ANTHROPIC_API_KEY": "${user_config.anthropic_api_key}",
+        "LLM_1_NAME": "${user_config.llm_name}",
+        "LLM_1_BASE_URL": "${user_config.llm_base_url}",
+        "LLM_1_API_KEY": "${user_config.llm_api_key}",
+        "LLM_1_MODEL": "${user_config.llm_model}",
+        "MYMEMORY_EMAIL": "${user_config.mymemory_email}"
+      }
+    }
+  },
+  "userConfig": {
+    "deepl_api_key": {
+      "type": "string",
+      "title": "DeepL API Key",
+      "sensitive": true,
+      "description": "可选。免费版密钥以 :fx 结尾，会自动使用免费接口。"
+    },
+    "google_api_key": {
+      "type": "string",
+      "title": "Google Cloud Translation API Key",
+      "sensitive": true,
+      "description": "可选。Cloud Translation Basic (v2) 的 API Key。"
+    },
+    "azure_translator_key": {
+      "type": "string",
+      "title": "微软 Azure Translator Key",
+      "sensitive": true,
+      "description": "可选。Azure 门户里 Translator 资源的密钥。"
+    },
+    "azure_translator_region": {
+      "type": "string",
+      "title": "微软 Azure Translator 区域",
+      "description": "可选。资源不是 global 时填写，例如 eastasia。"
+    },
+    "baidu_app_id": {
+      "type": "string",
+      "title": "百度翻译 APP ID",
+      "description": "可选。百度翻译开放平台的 APP ID。"
+    },
+    "baidu_secret": {
+      "type": "string",
+      "title": "百度翻译密钥",
+      "sensitive": true,
+      "description": "可选。百度翻译开放平台的密钥。"
+    },
+    "youdao_app_key": {
+      "type": "string",
+      "title": "有道智云 应用ID",
+      "description": "可选。有道智云文本翻译的应用 ID。"
+    },
+    "youdao_app_secret": {
+      "type": "string",
+      "title": "有道智云 应用密钥",
+      "sensitive": true,
+      "description": "可选。有道智云文本翻译的应用密钥。"
+    },
+    "anthropic_api_key": {
+      "type": "string",
+      "title": "Anthropic API Key（Claude 引擎）",
+      "sensitive": true,
+      "description": "可选。填写后加入 Claude API 翻译结果。"
+    },
+    "llm_name": {
+      "type": "string",
+      "title": "自定义大模型：显示名",
+      "description": "可选。OpenAI 兼容接口的大模型，例如 DeepSeek、通义千问。"
+    },
+    "llm_base_url": {
+      "type": "string",
+      "title": "自定义大模型：Base URL",
+      "description": "可选。例如 https://api.deepseek.com"
+    },
+    "llm_api_key": {
+      "type": "string",
+      "title": "自定义大模型：API Key",
+      "sensitive": true,
+      "description": "可选。"
+    },
+    "llm_model": {
+      "type": "string",
+      "title": "自定义大模型：模型名",
+      "description": "可选。以对应平台文档为准。"
+    },
+    "mymemory_email": {
+      "type": "string",
+      "title": "MyMemory 邮箱",
+      "description": "可选。免费引擎 MyMemory 默认开启，填邮箱可提高每日额度。"
+    }
+  }
+}

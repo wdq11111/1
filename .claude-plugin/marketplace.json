@@ -1,0 +1,12 @@
+{
+  "name": "wdq11111-plugins",
+  "description": "wdq11111 的 Claude Code 插件",
+  "owner": { "name": "wdq11111" },
+  "plugins": [
+    {
+      "name": "transcompare",
+      "source": "./plugins/transcompare",
+      "description": "译比 TransCompare：多引擎翻译对比"
+    }
+  ]
+}

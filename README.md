@@ -1,13 +1,16 @@
-# 轨道 Orbit
+# wdq11111 的小项目
 
-一个单文件的小网页游戏。光点沿圆形轨道自动绕圈，点击屏幕或按空格在内外两条轨道之间切换：躲开红色障碍，吃金色光点。
+## 译比 TransCompare（Claude Code 插件）
 
-- 每存活 0.5 秒 +1 分，吃到光点 +5 分
-- 速度和障碍密度会随时间增加
-- 最高分保存在浏览器本地
+多引擎翻译对比。安装方法：
 
-直接用浏览器打开 `index.html` 就能玩，手机和电脑都支持，没有任何依赖。
+```
+/plugin marketplace add wdq11111/1
+/plugin install transcompare@wdq11111-plugins
+```
 
----
+详见 [plugins/transcompare](plugins/transcompare/)。
 
-另见 [`translator/`](translator/)：多引擎翻译对比工具。
+## 轨道 Orbit（网页小游戏）
+
+光点沿圆形轨道自动绕圈，点击屏幕或按空格在内外两条轨道之间切换：躲开红色障碍，吃金色光点。直接用浏览器打开 `index.html` 就能玩。
