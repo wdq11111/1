@@ -2,3 +2,4 @@ node_modules/
 dist/
 stills/
 *.mp4
+!transcompare-promo.mp4

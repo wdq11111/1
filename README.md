@@ -9,7 +9,7 @@
 /plugin install transcompare@wdq11111-plugins
 ```
 
-详见 [plugins/transcompare](plugins/transcompare/)。
+详见 [plugins/transcompare](plugins/transcompare/)。▶ [30 秒宣传片](promo/transcompare-promo.mp4)
 
 ## 轨道 Orbit（网页小游戏）
 

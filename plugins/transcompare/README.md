@@ -2,6 +2,10 @@
 
 Claude Code 插件：把同一段文字同时交给多个翻译引擎，结果并排对比。Claude 也会给出自己的译文，并推荐最终译法。
 
+[![宣传片](../../promo/poster.jpg)](../../promo/transcompare-promo.mp4)
+
+▶ [观看 30 秒宣传片](../../promo/transcompare-promo.mp4)
+
 ## 安装
 
 在 Claude Code 里运行：
