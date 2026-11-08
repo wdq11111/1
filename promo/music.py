@@ -117,58 +117,142 @@ def click():
     n = int(0.018 * SR)
     return np.diff(rng.standard_normal(n), prepend=0) * np.exp(-np.arange(n) / SR * 400) * 0.10
 
-# ---------- 编曲 ----------
-# 和弦：Am - F - C - G，每个 2 拍一小节 x2 = 4 秒
-prog = [([57, 60, 64], 45), ([53, 57, 60], 41), ([48, 52, 55], 36), ([55, 59, 62], 43)]
-CH = 4 * BEAT * 2  # 每个和弦 4 秒
+# ---------- 更多乐器 ----------
+def snare():
+    n = int(0.2 * SR); x = np.arange(n) / SR
+    body = np.sin(2 * np.pi * 190 * x) * np.exp(-x * 30) * 0.5
+    noise = np.diff(rng.standard_normal(n), prepend=0) * np.exp(-x * 22) * 0.35
+    return (body + noise) * 0.5
 
-# 底层铺垫：全程
-t = 0.0; ci = 0
-while t < 28.0:
-    notes, root = prog[ci % 4]
-    d = min(CH, 28.0 - t)
-    add(pad(notes, d + 0.4), t, gain=0.9 if t >= 1.8 else 0.5, pan=0)
-    t += CH; ci += 1
-# 结尾长和弦
-add(pad([57, 60, 64, 69], 2.6), 27.6, gain=1.0)
+def lead(m, dur, g=0.13):
+    n = int(dur * SR); x = np.arange(n) / SR
+    f = note_hz(m) * (1 + 0.006 * np.sin(2 * np.pi * 5.5 * x) * np.clip(x / 0.25, 0, 1))
+    ph = 2 * np.pi * np.cumsum(f) / SR
+    s = np.sign(np.sin(ph)) * 0.35 + np.sin(ph) * 0.65
+    s = lowpass(s, 3200)
+    e = env(n, 0.01, dur, sustain=0.75, curve=2) * np.clip((dur - x) / 0.06, 0, 1)
+    return s * e * g
 
-# 鼓：1.8s 图标落定后进入；17~22 推荐段减弱；27 后停
-for b in range(60):
-    tb = b * BEAT
-    if tb < 1.8 or tb >= 27.0: continue
-    soft = 17.0 <= tb < 22.0
-    if not soft or b % 2 == 0:
-        add(kick(), tb, gain=0.8 if soft else 1.0)
-    add(hat(), tb + BEAT / 2, gain=0.8, pan=0.3)
-    if b % 4 == 3 and not soft:
-        add(hat(True), tb + BEAT * 0.75, gain=0.6, pan=-0.3)
-    if b % 2 == 1 and tb >= 9.0 and not soft:
-        add(clap(), tb, gain=1.0)
+def bell(m, dur=1.6, g=0.13):
+    n = int(dur * SR); x = np.arange(n) / SR
+    f = note_hz(m)
+    s = np.sin(2 * np.pi * f * x + 1.8 * np.sin(2 * np.pi * f * 3.5 * x) * np.exp(-x * 3))
+    return s * np.exp(-x * 2.2) * g
 
-# 贝斯：跟和弦根音，八分音符
-t = 4.5
-while t < 27.0:
-    ci = int(t // CH) % 4
-    root = prog[ci][1]
-    eighth = int(round((t % 1) / (BEAT / 2)))
-    add(bass(root if eighth % 2 == 0 else root + 12, BEAT / 2 * 0.9), t, gain=0.9)
-    t += BEAT / 2
+def reverse_cymbal(dur=1.0):
+    n = int(dur * SR)
+    s = np.diff(rng.standard_normal(n), prepend=0)
+    return s * (np.arange(n) / n) ** 3 * 0.35
+
+# ---------- 编曲：跟着画面分段 ----------
+# 和弦表：(开始, 结束, 和弦三音, 贝斯根音)
+CH = {
+    'Am': ([57, 60, 64], 45), 'F': ([53, 57, 60], 41), 'G': ([55, 59, 62], 43), 'C': ([55, 60, 64], 48),
+    'Bm': ([59, 62, 66], 47), 'A': ([57, 61, 64], 45), 'D': ([57, 62, 66], 38),
+}
+chart = [
+    (0.0, 4.5, 'Am'),                                   # 开场
+    (4.5, 6.5, 'F'), (6.5, 9.0, 'G'),                   # 原文卡
+    (9.0, 11.0, 'Am'), (11.0, 13.0, 'F'), (13.0, 15.0, 'C'), (15.0, 17.0, 'G'),  # 多引擎
+    (17.0, 19.5, 'F'), (19.5, 22.0, 'G'),               # 推荐（breakdown）
+    (22.0, 24.0, 'Bm'), (24.0, 26.0, 'G'), (26.0, 27.0, 'A'),  # 终端（升一个全音）
+    (27.0, 30.0, 'D'),                                  # 结尾落在大三和弦
+]
+def chord_at(t):
+    for a, b, c in chart:
+        if a <= t < b: return CH[c]
+    return CH['D']
+
+for a, b, c in chart:
+    notes, _ = CH[c]
+    g = 0.5 if a < 1.8 else (1.1 if 17.0 <= a < 22.0 else 0.85)
+    if c == 'D': notes = notes + [notes[0] + 12]
+    add(pad(notes, b - a + 0.45), a, gain=g)
+
+beats = lambda a, b, step=BEAT: [a + i * step for i in range(int(round((b - a) / step)))]
+
+# --- 鼓 ---
+for tb in beats(1.8, 4.5):                       # 开场：四拍底鼓
+    add(kick(), tb, 0.9); add(hat(), tb + BEAT / 2, 0.7, 0.3)
+for i, tb in enumerate(beats(4.5, 8.5)):         # 原文卡：半拍感
+    if i % 4 == 0: add(kick(), tb, 0.9)
+    if i % 4 == 2: add(clap(), tb, 0.8)
+    add(hat(), tb + BEAT / 2, 0.5, 0.3)
+for k in range(8):                               # 过门：军鼓加速
+    add(snare(), 8.5 + k * BEAT / 8, 0.35 + k * 0.07)
+for i, tb in enumerate(beats(9.0, 16.5)):        # 多引擎：完整律动
+    add(kick(), tb, 1.0)
+    if i % 2 == 1: add(clap(), tb, 1.0)
+    if tb < 13.0: add(hat(), tb + BEAT / 2, 0.8, 0.3)
+    else:
+        for q in range(4): add(hat(), tb + q * BEAT / 4, 0.5 if q % 2 == 0 else 0.8, 0.3)
+    if i % 4 == 3: add(hat(True), tb + BEAT * 0.5, 0.6, -0.3)
+for k in range(4): add(snare(), 16.5 + k * BEAT / 4, 0.5 + k * 0.1)
+# 推荐段：只有铺底和钟声，最后一秒加速军鼓推上去
+for k in range(16): add(snare(), 21.0 + k * BEAT / 8, 0.15 + k * 0.035)
+for i, tb in enumerate(beats(22.0, 26.9)):       # 终端：切分底鼓 + 16 分音符踩镲
+    add(kick(), tb, 1.0)
+    if i % 4 == 3: add(kick(), tb + BEAT * 0.75, 0.7)
+    if i % 2 == 1: add(clap(), tb, 1.0)
+    for q in range(4): add(hat(), tb + q * BEAT / 4, 0.45 if q % 2 == 0 else 0.75, 0.3)
+add(reverse_cymbal(1.0), 8.0, 0.8)
+add(reverse_cymbal(1.0), 21.0, 0.9)
+add(reverse_cymbal(1.2), 26.65, 0.9)
+
+# --- 贝斯 ---
+for tb in beats(4.5, 9.0):                       # 四分音符长音
+    add(bass(chord_at(tb)[1], BEAT * 0.95), tb, 0.85)
+for i, tb in enumerate(beats(9.0, 17.0, BEAT / 2)):   # 八分音符八度跳
+    r = chord_at(tb)[1]
+    add(bass(r if i % 2 == 0 else r + 12, BEAT / 2 * 0.9), tb, 0.9)
+for a, b, c in chart:                            # 推荐段：长低音
+    if 17.0 <= a < 22.0: add(bass(CH[c][1] - 12, b - a), a, 0.7)
+for tb in beats(22.0, 27.0, BEAT):               # 终端：切分
+    r = chord_at(tb)[1]
+    for off, d, o in ((0, 0.6, 0), (0.75, 0.25, 12), (1.5, 0.4, 0)):
+        if tb + off * BEAT < 27.0: add(bass(r + o, d * BEAT), tb + off * BEAT, 0.9)
+
+# --- 琶音 ---
+def arp(a, b, step, octave, g):
+    for i, tb in enumerate(beats(a, b, step)):
+        notes = chord_at(tb)[0]
+        seq = [notes[0], notes[1], notes[2], notes[1] + 12]
+        add(pluck(seq[i % 4] + octave, 0.35, g), tb, pan=-0.4 if i % 2 else 0.4)
+arp(1.8, 4.5, BEAT / 2, 12, 0.07)
+arp(4.5, 9.0, BEAT / 4, 12, 0.05)
+arp(22.0, 27.0, BEAT / 4, 24, 0.05)
+
+# --- 主旋律（多引擎段）---
+phrase = [  # (拍, 音高, 时值拍)
+    (0, 76, 1), (1, 79, 0.5), (1.5, 81, 1.5), (3, 79, 0.5), (3.5, 76, 0.5),
+    (4, 77, 1), (5, 72, 1), (6, 69, 2),
+    (8, 79, 1), (9, 76, 0.5), (9.5, 72, 1), (10.5, 74, 1.5),
+    (12, 79, 1), (13, 83, 1), (14, 86, 1), (15, 79, 1),
+]
+for b0, m, d in phrase:
+    add(lead(m, d * BEAT * 0.95), 9.0 + b0 * BEAT, pan=0.1)
+
+# --- 钟声旋律（推荐段）---
+for tt, m in ((17.0, 69), (17.75, 72), (18.5, 77), (19.5, 74), (20.25, 79), (21.0, 83), (21.5, 86)):
+    add(bell(m, 1.8, 0.12), tt, pan=0.2)
+
+# --- 结尾：大三和弦琶音 + 钟声 ---
+for k, m in enumerate([62, 66, 69, 74, 78]):
+    add(bell(m, 2.2, 0.1), 27.9 + k * 0.12, pan=-0.3 + k * 0.15)
 
 # ---------- 音效（与画面对齐）----------
 add(whoosh(1.5), 0.25, gain=0.6)              # 两块板飞入
 add(impact(), 1.75, gain=0.9)                 # 合体落定
-add(pluck(76, 1.2, 0.12), 1.8); add(pluck(81, 1.2, 0.10), 1.8)
 add(whoosh(0.9), 4.4, gain=0.45, pan=-0.4)    # 图标退场、原文卡进场
 add(whoosh(1.0), 8.9, gain=0.5, pan=0.4)      # 卡片展开
 for i in range(8):                            # 8 张引擎卡片依次入场
-    add(pluck(64 + [0, 3, 7, 10, 12, 15, 19, 22][i], 0.4, 0.08), 9.45 + i * 0.12, pan=0.5)
+    add(pluck(64 + [0, 3, 7, 10, 12, 15, 19, 22][i], 0.4, 0.06), 9.45 + i * 0.12, pan=0.5)
 for i in range(8):                            # 各引擎完成的“叮”
-    start = 11.0 + jsrand(i + 50) * 1.0
-    dur = 0.9 + jsrand(i + 80) * 1.4
-    add(ping(84 + [0, 2, 4, 7, 9, 12, 14, 16][i]), start + dur + 0.36, pan=0.35)
+    st = 11.0 + jsrand(i + 50) * 1.0
+    du = 0.9 + jsrand(i + 80) * 1.4
+    add(ping(84 + [0, 2, 4, 7, 9, 12, 14, 16][i]), st + du + 0.36, gain=0.8, pan=0.35)
 add(whoosh(1.2), 16.6, gain=0.5)              # 转场到推荐卡
-add(impact(), 18.1, gain=0.55)
-add(pluck(81, 1.0, 0.12), 18.2); add(pluck(88, 1.0, 0.08), 18.45)
+add(impact(), 18.1, gain=0.45)
 add(whoosh(1.0), 22.0, gain=0.5, pan=-0.3)    # 终端进场
 for i in range(34):                           # 打字声
     add(click(), 23.2 + i / 30 + rng.uniform(-0.004, 0.004), pan=0.1)
@@ -184,7 +268,7 @@ def reverb(x):
     for d, g in ((0.031, 0.35), (0.047, 0.3), (0.071, 0.25), (0.113, 0.2), (0.167, 0.15)):
         k = int(d * SR); out[k:] += x[:-k] * g
     return out
-L = reverb(L); R = reverb(R[::-1])[::-1] * 0 + reverb(R)
+L = reverb(L); R = reverb(R)
 fade = np.clip((DUR - t_all) / 1.2, 0, 1)
 L *= fade; R *= fade
 mix = np.stack([L, R], 1)
