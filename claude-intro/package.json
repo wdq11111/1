@@ -1,0 +1,16 @@
+{
+  "name": "claude-intro-video",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Claude 自我介绍动效视频（HTML 逐帧渲染）",
+  "scripts": {
+    "stills": "node render.cjs stills",
+    "preview": "node render.cjs preview",
+    "render": "node render.cjs full"
+  },
+  "dependencies": {
+    "@fontsource/jetbrains-mono": "^5.0.0",
+    "@fontsource/noto-sans-sc": "^5.0.0",
+    "@fontsource/noto-serif-sc": "^5.0.0"
+  }
+}
