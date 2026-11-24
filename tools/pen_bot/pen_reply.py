@@ -46,6 +46,8 @@ def main():
     reply = open(reply_path, encoding="utf-8").read().strip()
     info = json.loads(call("getNoteTextContent", {"fileId": fid}))
     title, original = info["title"], (info.get("content") or "").rstrip()
+    if not title.lower().endswith((".txt", ".md")):
+        sys.exit(f"refusing to modify {title!r}: only .txt and .md notes are safe to rewrite")
     new_content = f"{original}\n\n—— Claude 回复 ——\n{reply}\n"
     is_md = title.lower().endswith(".md")
     if not is_md:

@@ -16,6 +16,7 @@ from mcp.client.sse import sse_client
 
 URL = "https://open.mail.163.com/api/ynote/mcp/sse"
 MARKER = "—— Claude 回复 ——"
+TEXT_SUFFIXES = (".txt", ".md")
 FOLDERS = {
     "0392A7F1EE0E40399B6A635C2D8CF2CC": "词典笔笔记",
     "C5C516F2779B4C85916159C1A64ADD92": "文档扫描",
@@ -58,10 +59,17 @@ def main():
             # A note that already carries a reply was answered before (e.g. the
             # state file was lost): remember it silently instead of re-answering.
             answered = [i for i in new if MARKER in (notes[i].get("content") or "")]
-            if answered:
-                seen.update(answered)
+            # Voice notes (.audio) and other non-text types cannot be read or
+            # written through the API; skip them without waking anyone.
+            unsupported = [i for i in new if not notes[i]["name"].lower().endswith(TEXT_SUFFIXES)]
+            if answered or unsupported:
+                seen.update(answered + unsupported)
                 json.dump(sorted(seen), open(state_path, "w"))
-            new = [i for i in new if i not in answered]
+                if unsupported:
+                    with open(state_path + ".log", "a") as f:
+                        for i in unsupported:
+                            f.write(f"{time.strftime('%H:%M:%S')} skipped unsupported note type: {notes[i]['folder']}\n")
+            new = [i for i in new if i not in answered and i not in unsupported]
             if new:
                 print(json.dumps({i: notes[i] for i in new}, ensure_ascii=False, indent=1))
                 return
