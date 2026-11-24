@@ -33,13 +33,13 @@ print(f"[sheet] {key} build {time.time() - t0:.1f}s, verts {len(ch['mesh'].data.
 # ---- 设定图姿势：Claude 右手把书抱在胸前，其余保持静止姿态
 if key == "cla":
     # 右手把书立在右胸前（解析两骨 IK），书面朝前、略向内转
-    posing.two_bone(arm, "upper_arm.R", "forearm.R", (-0.085, -0.120, 1.075), (-1.0, 0.5, -0.4))
-    posing.aim(arm, "hand.R", Vector((0.10, -0.35, 1.0)))
+    posing.two_bone(arm, "upper_arm.R", "forearm.R", (-0.10, -0.115, 1.06), (-1.0, 0.5, -0.4))
+    posing.aim(arm, "hand.R", Vector((0.55, -0.55, 0.62)))
     bpy.context.view_layer.update()
     book = ch["props"][0]
     pb = arm.pose.bones["hand.R"]
     hd = (pb.tail - pb.head).normalized()
-    c = pb.head + hd * 0.075 + Vector((0.012, -0.030, 0.0))
+    c = pb.head + hd * 0.055 + Vector((0.035, -0.022, 0.065))
     R = Matrix.Rotation(math.radians(14), 4, "Z") @ Matrix.Rotation(math.radians(-10), 4, "X")
     book.matrix_world = arm.matrix_world @ (Matrix.Translation(c) @ R)
 if key == "gem":

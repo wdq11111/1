@@ -122,7 +122,7 @@ def frill_ring(acc, color, mat, z, rx, ry, drop, flare, waves=24, amp=0.25, rows
 
 
 def frill_along(acc, color, mat, pts, down, width, waves=10, amp=0.3, rows=5, weights=None, ol=0.6,
-                normal_fn=None):
+                normal_fn=None, scallop=0.0):
     """沿曲线的荷叶边：每点往 down(p) 方向长出 width，并沿法线方向起伏。"""
     pts = [V(p) for p in pts]
     m = len(pts)
@@ -135,7 +135,8 @@ def frill_along(acc, color, mat, pts, down, width, waves=10, amp=0.3, rows=5, we
             nrm = normal_fn(p) if normal_fn else V((0, -1, 0))
             u = j / (m - 1)
             wv = math.sin(u * TAU * waves)
-            ring.append(p + dvec * (width * t) + nrm * (amp * width * t * wv))
+            wk = 1.0 - scallop * (1.0 - abs(math.sin(u * math.pi * waves))) ** 2 * t ** 3
+            ring.append(p + dvec * (width * t * wk) + nrm * (amp * width * t * wv))
         rings.append(ring)
     g = rings_to_geo(rings, closed=False, orient=False)
     nf = normal_fn or (lambda p: V((0, -1, 0)))

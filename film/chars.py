@@ -721,11 +721,11 @@ def build_ds(acc, rig, col):
            depth_out=0.03)
     H.ahoge(az=-6, h=0.085, curl=-1.0)
     # 女仆头饰：白色荷叶发箍 + 左上蓝色蝴蝶结
-    band = [cap_point(lerp(-95, 95, j / 79), 30 + 14 * (abs(j - 39.5) / 39.5) ** 2, 1.07) for j in range(80)]
-    cloth.frill_along(acc, WHITE, I_CLOTH, band, lambda p: ((p - CAP_C).normalized() * 0.55 + V((0, -0.55, 0.25))).normalized(),
-                      0.050, waves=22, amp=0.40, rows=5, weights=W1("head"), ol=0.5,
-                      normal_fn=lambda p: V((0, -0.6, 0.8)).normalized())
-    acc.add(tube(band, [(0.008, 0.004)] * 80, n=8, out_fn=lambda p, t: p - CAP_C), WHITE, mat=I_CLOTH,
+    band = [cap_point(lerp(-95, 95, j / 239), 30 + 14 * (abs(j - 119.5) / 119.5) ** 2, 1.07) for j in range(240)]
+    cloth.frill_along(acc, WHITE, I_CLOTH, band, lambda p: ((p - CAP_C).normalized() * 0.75 + V((0, -0.35, 0.15))).normalized(),
+                      0.040, waves=16, amp=0.22, rows=8, weights=W1("head"), ol=0.5,
+                      normal_fn=lambda p: V((0, -0.85, 0.2)).normalized(), scallop=0.55)
+    acc.add(tube(band, [(0.008, 0.004)] * 240, n=8, out_fn=lambda p, t: p - CAP_C), WHITE, mat=I_CLOTH,
             weights=W1("head"), ol=0.5)
     bp = cap_point(62, 46, 1.10)
     cloth.bow(acc, bp, bp - CAP_C, 0.024, C("#4fb0ea"), I_CLOTH, W1("head"), tails=True, tail_len=0.6)
