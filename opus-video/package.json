@@ -1,0 +1,12 @@
+{
+  "name": "next-opus-video",
+  "private": true,
+  "description": "下一代 Opus 什么时候来 — 数据解说视频（逐帧确定性渲染）",
+  "scripts": {
+    "render": "node tools/render.js"
+  },
+  "dependencies": {
+    "@fontsource/space-grotesk": "5.1.0",
+    "@fontsource/jetbrains-mono": "5.1.1"
+  }
+}

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>下一代 Opus 什么时候来</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="frame">
+  <canvas id="bg" width="1920" height="1080"></canvas>
+  <div id="stage"></div>
+  <canvas id="fx" width="1920" height="1080"></canvas>
+  <div id="hud">
+    <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    <div class="hud-tl mono"><span class="rec"></span>NEXT OPUS <b>·</b> RELEASE CADENCE</div>
+    <div class="hud-tr"><span class="mono idx">01 / 12</span><span class="ttl">冷开场</span></div>
+    <div class="hud-bl mono">DATA AS OF 2026.11.23 <b>·</b> UNOFFICIAL ESTIMATE</div>
+    <div class="hud-br mono tc">00:00:00</div>
+    <div class="hud-prog"><i></i></div>
+  </div>
+  <div id="subs"><span></span></div>
+  <div id="vignette"></div>
+  <canvas id="grain" width="960" height="540"></canvas>
+  <div id="black"></div>
+</div>
+<script src="main.js"></script>
+<script src="scenes.js"></script>
+</body>
+</html>
