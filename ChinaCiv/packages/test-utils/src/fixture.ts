@@ -1,8 +1,9 @@
 import { Terrain, type Bounds, type CameraView, type CityId, type CityVisual, type GridCore, type LineId,
-  type NetworkVisual, type Point, type RenderView, type ScalarTexture } from '../../core-types/src/map';
+  type NetworkVisual, type Point, type RenderView, type ScalarTexture, type TileId } from '../../core-types/src/map';
 import { center, gridBounds, indexInWindow, pickTile } from '../../hexgrid/src/grid';
 
-export const DEFAULT_VIEW: CameraView = { x: 265000, y: 55000, width: 1880000 };
+// P1a-02: the home view frames the whole basin, like USACiv's national view (P1a-01 used a 1,880 km mid view).
+export const DEFAULT_VIEW: CameraView = { x: -80000, y: 40000, width: 3300000 };
 const SEED = 281137;
 export const GRID_CORE: GridCore = {
   aoiId: 'qinglan-procedural-fixture-281137',
@@ -81,6 +82,48 @@ const places = [
   ['白屿', 'baiyu', 1045, -328, 112000, 183, '外海岛上的聚落。'],
 ] as const;
 
+// P1a-02: secondary towns, so the map has the settlement density of a USACiv-style map (villages, towns and their
+// banners). Placed deterministically on habitable lowland by synthetic density with a minimum spacing; names are
+// composed from fixed syllables and are fictional. All values are synthetic.
+const TOWN_HEADS = [['安', 'an'], ['丰', 'feng'], ['柳', 'liu'], ['枫', 'feng'], ['桐', 'tong'], ['芦', 'lu'], ['杏', 'xing'],
+  ['苇', 'wei'], ['菱', 'ling'], ['槐', 'huai'], ['榆', 'yu'], ['莲', 'lian'], ['禾', 'he'], ['梓', 'zi'], ['樟', 'zhang'],
+  ['荻', 'di'], ['蒲', 'pu'], ['棠', 'tang'], ['竹', 'zhu'], ['栗', 'li']] as const;
+const TOWN_TAILS = [['溪', 'xi'], ['桥', 'qiao'], ['坪', 'ping'], ['塘', 'tang'], ['湾', 'wan'], ['集', 'ji'], ['岗', 'gang'],
+  ['渡', 'du'], ['埠', 'bu'], ['冈', 'gang'], ['畈', 'fan'], ['垸', 'yuan'], ['墩', 'dun'], ['陂', 'bei']] as const;
+
+function synthesizeTowns(grid: GridCore, terrain: Uint8Array, land: Uint8Array, population: Float32Array, primary: CityVisual[]): CityVisual[] {
+  const habitable = new Set([Terrain.Plain, Terrain.Grassland, Terrain.Hills, Terrain.Wetland, Terrain.Plateau]);
+  const candidates: { tile: number; x: number; y: number; score: number }[] = [];
+  for (let row = 2; row < grid.rows - 2; row++) for (let col = 2; col < grid.cols - 2; col++) {
+    const i = row * grid.cols + col;
+    if (!land[i] || !habitable.has(terrain[i])) continue;
+    const [mx, my] = center(grid, col, row), x = mx / 1000, y = my / 1000;
+    if (x < -1700 || x > 1500 || y < -1000 || y > 1060) continue;
+    candidates.push({ tile: i, x, y, score: Math.sqrt(population[i] + 4) * (0.35 + cellNoise(col + 913, row + 77)) });
+  }
+  candidates.sort((a, b) => b.score - a.score || a.tile - b.tile);
+  const placed: { x: number; y: number }[] = primary.map(c => ({ x: c.anchorX / 1000, y: c.anchorY / 1000 }));
+  const towns: CityVisual[] = [];
+  const used = new Set<string>(primary.map(c => c.label));
+  for (const c of candidates) {
+    if (towns.length >= 46) break;
+    const nearPrimary = placed.slice(0, primary.length).some(p => Math.hypot(p.x - c.x, p.y - c.y) < 95);
+    if (nearPrimary || placed.some(p => Math.hypot(p.x - c.x, p.y - c.y) < 72)) continue;
+    const k = towns.length;
+    let h = Math.floor(cellNoise(c.tile, 4242) * TOWN_HEADS.length), t = Math.floor(cellNoise(c.tile, 2424) * TOWN_TAILS.length);
+    while (used.has(TOWN_HEADS[h][0] + TOWN_TAILS[t][0])) { t = (t + 1) % TOWN_TAILS.length; if (t === 0) h = (h + 1) % TOWN_HEADS.length; }
+    const label = TOWN_HEADS[h][0] + TOWN_TAILS[t][0];
+    used.add(label);
+    placed.push({ x: c.x, y: c.y });
+    const pop = Math.round((22000 + 150000 * cellNoise(c.tile, 99) ** 2 + 260 * population[c.tile]) / 100) * 100;
+    const [ax, ay] = center(grid, c.tile % grid.cols, Math.floor(c.tile / grid.cols));
+    towns.push({ id: (primary.length + k) as CityId, anchorTile: c.tile as TileId, anchorX: ax, anchorY: ay, label,
+      pinyin: TOWN_HEADS[h][1] + TOWN_TAILS[t][1], population: pop, economy: Math.round(pop / 1e4 * (12 + 9 * cellNoise(c.tile, 7))),
+      primary: false, description: '合成聚落，用于检验城镇旗标与聚落美术分级。名称与数值均为程序生成。' });
+  }
+  return towns;
+}
+
 function makeTexture(bounds: Bounds, width: number, height: number, sample: (x: number, y: number) => number): ScalarTexture {
   const values = new Uint8Array(width * height);
   for (let row = 0; row < height; row++) for (let col = 0; col < width; col++) {
@@ -142,6 +185,7 @@ export function createFixture(): RenderView {
     return { id: id as CityId, anchorTile, anchorX, anchorY, label, pinyin, population: pop,
       economy: gdp, primary: id < 9, description };
   });
+  cities.push(...synthesizeTowns(grid, terrain, land, population, cities));
   const routes = [
     ['青澜铁路', 'rail', [[-185, 151], [-95, 100], [37, 98], [155, 67], [245, 42], [369, 34], [510, -65], [659, -126]]],
     ['横岭公路', 'road', [[52, 330], [119, 278], [217, 276], [333, 264], [386, 164], [382, 101], [245, 42]]],
