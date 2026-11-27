@@ -3,12 +3,12 @@
     "width": 1440,
     "height": 900
   },
-  "browser": "156.0.8078.79",
+  "browser": "158.0.8127.36",
   "host": "linux x64",
   "warmupMs": 5000,
   "sampleWindowMs": 12000,
-  "readyMs": 2882.0391090000003,
-  "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "readyMs": 1337.4581580000001,
+  "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36",
   "dpr": 1,
   "capabilities": {
     "webgl2": true,
@@ -26,32 +26,52 @@
     "highpIntRange": 30
   },
   "firstRender": {
-    "frameMs": 389.69999999995343,
-    "drawCalls": 8,
-    "triangles": 7196,
-    "instances": 2524,
-    "textureBytes": 3021982,
-    "bufferWidth": 1208,
-    "bufferHeight": 793
+    "frameMs": 332.60000000009313,
+    "drawCalls": 1,
+    "triangles": 2,
+    "instances": 30492,
+    "textureBytes": 8307200,
+    "bufferWidth": 1440,
+    "bufferHeight": 860,
+    "staticMs": 181.19999999995343,
+    "staticPaints": 1,
+    "cells": 30492,
+    "banners": 10,
+    "spriteCache": 1,
+    "lod": "far"
   },
   "rafIntervalMs": {
-    "n": 78,
-    "average": 154.47948717948717,
-    "p50": 150,
-    "p95": 249.89999999999964,
-    "max": 300
+    "n": 250,
+    "average": 48.464800000000004,
+    "p50": 33.29999999999927,
+    "p95": 250,
+    "max": 433.2999999999993
   },
   "renderCpuMs": {
-    "n": 78,
-    "average": 1.0743589743625563,
-    "p50": 0.5999999998603016,
-    "p95": 4.100000000093132,
-    "max": 16.600000000093132
+    "n": 250,
+    "average": 18.549600000004283,
+    "p50": 0.30000000004656613,
+    "p95": 217,
+    "max": 414
   },
-  "missed50ms": 76,
-  "drawCallsMax": 8,
-  "trianglesMax": 7872,
-  "spriteInstancesMax": 2862,
-  "textureBytesEstimate": 3021982,
+  "missed50ms": 20,
+  "drawCallsMax": 1,
+  "trianglesMax": 2,
+  "spriteInstancesMax": 29488,
+  "textureBytesEstimate": 8307200,
+  "staticRepaints": 15,
+  "staticPaintMs": {
+    "n": 15,
+    "average": 216.49333333329608,
+    "p50": 229,
+    "p95": 347,
+    "max": 347
+  },
+  "bannersMax": 20,
+  "lodSeen": [
+    "mid",
+    "near",
+    "far"
+  ],
   "errors": []
 }

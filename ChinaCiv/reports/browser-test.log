@@ -1,17 +1,9 @@
 
-> chinaciv@0.1.0 test:e2e /workspace/ChinaCiv
-> playwright test
-
-
 Running 4 tests using 1 worker
 
-(node:3854) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
-(Use `node --trace-warnings ...` to show where the warning was created)
-(node:3854) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
-(Use `node --trace-warnings ...` to show where the warning was created)
-  ✓  1 tests/e2e/atlas.spec.ts:15:5 › desktop map renders and supports layers, selection, camera, search and export (11.1s)
-  ✓  2 tests/e2e/atlas.spec.ts:77:5 › landscape touch supports pinch, two-finger tap, drag and long press (7.2s)
-  ✓  3 tests/e2e/atlas.spec.ts:127:5 › shows a support screen when WebGL2 is unavailable (1.7s)
-  ✓  4 tests/e2e/atlas.spec.ts:138:5 › redraws retained map state after WebGL2 context restoration (3.8s)
+  ✓  1 tests/e2e/atlas.spec.ts:16:5 › desktop map renders and supports layers, selection, camera, search and export (8.9s)
+  ✓  2 tests/e2e/atlas.spec.ts:108:5 › landscape touch supports pinch, two-finger tap, drag and long press (4.6s)
+  ✓  3 tests/e2e/atlas.spec.ts:157:5 › shows a support screen when WebGL2 is unavailable (868ms)
+  ✓  4 tests/e2e/atlas.spec.ts:168:5 › redraws retained map state after WebGL2 context restoration (3.4s)
 
-  4 passed (25.9s)
+  4 passed (19.0s)

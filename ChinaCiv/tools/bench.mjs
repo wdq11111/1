@@ -49,7 +49,11 @@ try {
       firstRender:cold, rafIntervalMs:summarize(frameIntervals),
       renderCpuMs:summarize(frameStats.map(s=>s.frameMs)), missed50ms:frameIntervals.filter(x=>x>50).length,
       drawCallsMax:Math.max(...frameStats.map(s=>s.drawCalls)), trianglesMax:Math.max(...frameStats.map(s=>s.triangles)),
-      spriteInstancesMax:Math.max(...frameStats.map(s=>s.instances)), textureBytesEstimate:frameStats[0].textureBytes };
+      spriteInstancesMax:Math.max(...frameStats.map(s=>s.instances)), textureBytesEstimate:frameStats[0].textureBytes,
+      // P1a-02: the USACiv painters repaint the cached static layer when the view leaves the cache or a zoom settles.
+      staticRepaints:frameStats.at(-1).staticPaints-frameStats[0].staticPaints,
+      staticPaintMs:summarize(frameStats.filter((s,i)=>i>0 && s.staticPaints!==frameStats[i-1].staticPaints).map(s=>s.staticMs)),
+      bannersMax:Math.max(...frameStats.map(s=>s.banners)), lodSeen:[...new Set(frameStats.map(s=>s.lod))] };
   });
   const result = { viewport, browser:browser.version(), host:process.platform+' '+process.arch,
     warmupMs:5000, sampleWindowMs:12000, readyMs, ...measurement, errors };

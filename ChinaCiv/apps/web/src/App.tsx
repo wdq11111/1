@@ -395,7 +395,7 @@ export function App() {
           <span className={styles.muted}>点击查看城镇详情</span></>
           : <><b>{map.land[hoverIndex] ? (map.terrain[hoverIndex] === Terrain.Lake ? '湖泊' : COVER_NAMES[scene.coverOf(hoverTile)]) : '海洋'}</b>
             {map.land[hoverIndex] && map.terrain[hoverIndex] > Terrain.Lake ? ` · ${format.format(map.elevation[hoverIndex])} m` : ''}<br/>
-            <span className={styles.muted}>{scene.province(hoverTile) ? `${scene.province(hoverTile)!.name}${scene.province(hoverTile)!.foreign ? '' : '（合成分区）'}` : '青澜流域外海'}
+            <span className={styles.muted}>{scene.province(hoverTile) ? `${scene.province(hoverTile)!.name}${scene.province(hoverTile)!.foreign ? '' : '（合成分区）'}` : (map.land[hoverIndex] ? '青澜流域内湖' : '青澜流域外海')}
               {lensDef && map.land[hoverIndex] ? ` · ${lensDef.name} ${map.valid[hoverIndex] ? format.format((lens === 'population' ? map.population : map.economy)[hoverIndex]) : '无数据'}` : ''}</span></>}
       </div>}
       {selected && ready && !lost && <Inspector selected={selected} close={() => choose(null)} locate={locate}/>}

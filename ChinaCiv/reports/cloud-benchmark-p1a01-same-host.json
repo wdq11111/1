@@ -1,0 +1,66 @@
+{
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "browser": "158.0.8127.36",
+  "host": "linux x64",
+  "warmupMs": 5000,
+  "sampleWindowMs": 12000,
+  "readyMs": 1073.9183309999999,
+  "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36",
+  "dpr": 1,
+  "capabilities": {
+    "webgl2": true,
+    "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTextureSize": 8192,
+    "maxArrayLayers": 2048,
+    "maxTextureUnits": 32,
+    "maxCombinedUnits": 64,
+    "maxRenderbufferSize": 8192,
+    "maxViewport": [
+      8192,
+      8192
+    ],
+    "highp": 23,
+    "highpIntRange": 30
+  },
+  "firstRender": {
+    "frameMs": 76.19999999995343,
+    "drawCalls": 8,
+    "triangles": 7196,
+    "instances": 2524,
+    "textureBytes": 3021982,
+    "bufferWidth": 1208,
+    "bufferHeight": 793
+  },
+  "rafIntervalMs": {
+    "n": 148,
+    "average": 80.96554054054054,
+    "p50": 66.70000000000073,
+    "p95": 133.39999999999964,
+    "max": 166.60000000000036
+  },
+  "renderCpuMs": {
+    "n": 148,
+    "average": 0.5689189189123116,
+    "p50": 0.4000000001396984,
+    "p95": 1.1000000000931323,
+    "max": 6.199999999953434
+  },
+  "missed50ms": 135,
+  "drawCallsMax": 8,
+  "trianglesMax": 7902,
+  "spriteInstancesMax": 2877,
+  "textureBytesEstimate": 3021982,
+  "staticRepaints": null,
+  "staticPaintMs": {
+    "n": 0,
+    "average": null
+  },
+  "bannersMax": null,
+  "lodSeen": [
+    null
+  ],
+  "errors": []
+}

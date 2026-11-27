@@ -1,6 +1,16 @@
 # ChinaCiv 进度与交接
 
-更新日期 2026-11-27。当前任务包 P1a-01。依据为 [V1.0 执行基线](architecture/ChinaCiv-Architecture-V1.0-Execution-Baseline.md) §6 及 F09、F11、F12 和 R219。附件中只收到合并基线，已采用文件内的最终技术决议。独立的 `ChinaCiv-V1.0-Final-Decisions.md` 未随附件提供。
+更新日期 2026-11-27。当前任务包 P1a-02（基于 P1a-01）。依据为 [V1.0 执行基线](architecture/ChinaCiv-Architecture-V1.0-Execution-Baseline.md) §6 及 F09、F11、F12 和 R219。附件中只收到合并基线，已采用文件内的最终技术决议。独立的 `ChinaCiv-V1.0-Final-Decisions.md` 未随附件提供。
+
+## P1a-02 视觉对标（2026-11-27）
+
+目标：在 P1a-01 上直接改，视觉语言与原版 USACiv（https://karpathy.ai/usaciv/）一致。
+
+- **许可核验**：2026-11-27 下载官方 `usaciv-source.zip`，`LICENSE` 为 MIT（© 2026 Andrej Karpathy）。README 写明所有图形都由代码绘制，MIT 不覆盖数据。字体为系统字体栈，未打包。因此移植了绘制代码，但没有使用 USACiv 的任何数据或位图。详见 `packages/renderer/src/usaciv/NOTICE.md`。
+- **架构**：保留 React + TypeScript + Three.js/WebGL2，以及 A 档俯视主渲染。USACiv 绘制器生成缓存纹理，由 WebGL2 合成；旗标与选中状态在 2D 覆盖层上。没有改 DEC-001 的四项方向。
+- **接口**：`RenderView`、`CameraView`、`Selection`、`atlasBench` 均保持不变（`atlasBench` 只新增了 `hits` 和 `routeProbe`）。夹具新增合成聚落，首页视野改为框住全流域。回合制扩展点没有动。
+- **验证**：单元测试 15/15、e2e 4/4、构建通过。同机基准的结论是：平时的帧更快，但连续缩放时静态层重绘造成长帧（P95 250 ms，软件渲染）。完整数据见 [reports/TEST.md](../reports/TEST.md)。
+- **仍未完成的门禁**：iPad 真机、参考硬件性能、真实数据许可与地图合规。仍需评估重绘长帧的优化：渐进重绘或 Worker。
 
 ## P1a-01 实现范围
 
