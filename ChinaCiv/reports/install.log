@@ -1,0 +1,56 @@
+(node:1055) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+   ╭───────────────────────────────────────────────────────────────────╮
+   │                                                                   │
+   │                Update available! 9.15.9 → 12.23.0.                │
+   │   Changelog: https://github.com/pnpm/pnpm/releases/tag/v12.23.0   │
+   │                 Run "pnpm add -g pnpm" to update.                 │
+   │                                                                   │
+   ╰───────────────────────────────────────────────────────────────────╯
+
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Progress: resolved 11, reused 0, downloaded 6, added 0
+Progress: resolved 26, reused 0, downloaded 10, added 0
+Progress: resolved 30, reused 0, downloaded 24, added 0
+Progress: resolved 46, reused 0, downloaded 33, added 0
+Progress: resolved 58, reused 0, downloaded 47, added 0
+Progress: resolved 76, reused 0, downloaded 61, added 0
+Progress: resolved 92, reused 0, downloaded 70, added 0
+Progress: resolved 121, reused 0, downloaded 73, added 0
+Progress: resolved 146, reused 0, downloaded 82, added 0
+Progress: resolved 161, reused 0, downloaded 104, added 0
+Packages: +118
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 169, reused 0, downloaded 118, added 118, done
+.../esbuild@0.25.12/node_modules/esbuild postinstall$ node install.js
+.../esbuild@0.25.12/node_modules/esbuild postinstall: Done
+
+dependencies:
++ react 18.3.1 (19.3.1 is available)
++ react-dom 18.3.1 (19.3.1 is available)
++ three 0.179.1 (0.187.0 is available)
+
+devDependencies:
++ @playwright/test 1.55.0 (1.65.1 is available)
++ @types/react 18.3.24 (19.3.3 is available)
++ @types/react-dom 18.3.7 (19.3.0 is available)
++ @types/three 0.179.0 (0.187.0 is available)
++ @vitejs/plugin-react 5.0.2 (6.3.0 is available)
++ typescript 5.9.2 (7.0.2 is available)
++ vite 7.1.4 (8.4.0 is available)
++ vitest 3.2.4 (5.1.2 is available)
+
+Done in 13s using pnpm v9.15.9
+ ERR_PNPM_ADDING_TO_ROOT  Running this command will add the dependency to the workspace root, which might not be what you want - if you really meant it, make it explicit by running this command again with the -w flag (or --workspace-root). If you don't want to see this warning anymore, you may set the ignore-workspace-root-check setting to true.
+(node:1540) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Progress: resolved 0, reused 1, downloaded 0, added 0
+Packages: +7
++++++++
+Progress: resolved 171, reused 118, downloaded 2, added 7, done
+
+devDependencies:
++ @types/node 22.18.0 (26.6.11 is available)
+
+Done in 2.3s using pnpm v9.15.9

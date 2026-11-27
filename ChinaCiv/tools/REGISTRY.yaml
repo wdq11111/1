@@ -1,0 +1,18 @@
+project: ChinaCiv
+scope: P1a-01
+fixture:
+  seed: 281137
+  generator: packages/test-utils/src/fixture.ts
+  atlasGenerator: packages/renderer/src/sprites.ts
+  titleMark: apps/web/public/seal.svg
+  geometryAndArt: original-project-source
+runtime:
+  nodeMeasured: 24.22.3
+  pnpm: 9.15.9
+  vite: 7.1.4
+  three: 0.179.1
+  chromiumMeasured: 156.0.8078.79
+  pythonAvailable: 3.12.14
+fonts:
+  mode: system-font-stack
+  measured: [Noto Sans CJK SC, Noto Serif CJK SC]

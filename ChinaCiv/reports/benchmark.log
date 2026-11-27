@@ -1,0 +1,61 @@
+
+> chinaciv@0.1.0 bench /workspace/ChinaCiv
+> node tools/bench.mjs
+
+{
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "browser": "156.0.8078.79",
+  "host": "linux x64",
+  "warmupMs": 5000,
+  "sampleWindowMs": 12000,
+  "readyMs": 2882.0391090000003,
+  "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "dpr": 1,
+  "capabilities": {
+    "webgl2": true,
+    "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTextureSize": 8192,
+    "maxArrayLayers": 2048,
+    "maxTextureUnits": 32,
+    "maxCombinedUnits": 64,
+    "maxRenderbufferSize": 8192,
+    "maxViewport": [
+      8192,
+      8192
+    ],
+    "highp": 23,
+    "highpIntRange": 30
+  },
+  "firstRender": {
+    "frameMs": 389.69999999995343,
+    "drawCalls": 8,
+    "triangles": 7196,
+    "instances": 2524,
+    "textureBytes": 3021982,
+    "bufferWidth": 1208,
+    "bufferHeight": 793
+  },
+  "rafIntervalMs": {
+    "n": 78,
+    "average": 154.47948717948717,
+    "p50": 150,
+    "p95": 249.89999999999964,
+    "max": 300
+  },
+  "renderCpuMs": {
+    "n": 78,
+    "average": 1.0743589743625563,
+    "p50": 0.5999999998603016,
+    "p95": 4.100000000093132,
+    "max": 16.600000000093132
+  },
+  "missed50ms": 76,
+  "drawCallsMax": 8,
+  "trianglesMax": 7872,
+  "spriteInstancesMax": 2862,
+  "textureBytesEstimate": 3021982,
+  "errors": []
+}

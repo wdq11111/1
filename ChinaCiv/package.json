@@ -1,0 +1,30 @@
+{
+  "name": "chinaciv",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@9.15.9",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "bench": "node tools/bench.mjs"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "three": "0.179.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.55.0",
+    "@types/node": "22.18.0",
+    "@types/react": "18.3.24",
+    "@types/react-dom": "18.3.7",
+    "@types/three": "0.179.0",
+    "@vitejs/plugin-react": "5.0.2",
+    "typescript": "5.9.2",
+    "vite": "7.1.4",
+    "vitest": "3.2.4"
+  }
+}

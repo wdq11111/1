@@ -1,0 +1,18 @@
+
+> chinaciv@0.1.0 build /workspace/ChinaCiv
+> tsc --noEmit && vite build
+
+vite v7.1.4 building for production...
+transforming...
+✓ 41 modules transformed.
+rendering chunks...
+computing gzip size...
+../../dist/index.html                   0.53 kB │ gzip:   0.36 kB
+../../dist/assets/index-zblbWz8f.css   16.76 kB │ gzip:   4.56 kB
+../../dist/assets/index-C_33GHvH.js   661.83 kB │ gzip: 184.30 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 2.48s

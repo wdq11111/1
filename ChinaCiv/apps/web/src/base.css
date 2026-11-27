@@ -1,0 +1,20 @@
+:root {
+  font-family: "Noto Sans CJK SC","PingFang SC","Microsoft YaHei",sans-serif;
+  color: #342f26;
+  background: #f0e9d9;
+  font-synthesis: none;
+  font-variant-numeric: tabular-nums;
+  --ink: #343329;
+  --muted: #716857;
+  --paper: #f5efdf;
+  --line: #dcd1b9;
+  --cinnabar: #984838;
+  --jade: #536951;
+  --serif: "Noto Serif CJK SC","Songti SC",SimSun,serif;
+}
+* { box-sizing: border-box; }
+html,body,#root { margin:0; height:100%; overflow:hidden; }
+button,input { font: inherit; }
+button { cursor: pointer; color: inherit; }
+button:disabled { cursor:default; opacity:.45; }
+button:focus-visible,input:focus-visible,canvas:focus-visible { outline:2px solid #9f4d3e; outline-offset:2px; }
