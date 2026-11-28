@@ -24,3 +24,16 @@
 .campaign-length input:focus-visible { outline: 2px solid var(--gold-bright); }
 .campaign-length input[aria-invalid="true"] { border-color: #ffb48a; }
 .campaign-length small { color: var(--ink-dim); }
+
+/* UI skin (GPT-generated art, sliced in assets/ui) */
+._menu_1hodr_2 ._emblem_1hodr_18{background:url(ui/seal.webp) center/contain no-repeat;border:0;color:transparent;box-shadow:none;filter:drop-shadow(0 6px 14px #000a);width:72px;height:72px}
+._menu_1hodr_2 ._trial_1hodr_21{background:none;border-radius:0;border:1px solid transparent;border-image:url(ui/banner.webp) 0 80 fill/0 38px stretch;padding:6px 44px}
+._menu_1hodr_2 ._list_1hodr_24 button,._menu_1hodr_2 ._row_1hodr_46 button,._menu_1hodr_2 ._mode_1hodr_37 button{background:none;box-shadow:none;border:1px solid transparent;border-radius:0;border-image:url(ui/btn-blue-normal.webp) 0 46 fill/0 27px stretch;text-shadow:0 1px 3px #000c}
+._menu_1hodr_2 ._list_1hodr_24 button:hover:not(:disabled),._menu_1hodr_2 ._row_1hodr_46 button:hover:not(:disabled),._menu_1hodr_2 ._mode_1hodr_37 button:hover:not(:disabled){background:none;border-image-source:url(ui/btn-blue-hover.webp)}
+._menu_1hodr_2 ._list_1hodr_24 button:active:not(:disabled),._menu_1hodr_2 ._row_1hodr_46 button:active:not(:disabled),._menu_1hodr_2 ._mode_1hodr_37 button:active:not(:disabled){border-image-source:url(ui/btn-blue-active.webp)}
+._menu_1hodr_2 ._list_1hodr_24 button:disabled,._menu_1hodr_2 ._row_1hodr_46 button:disabled,._menu_1hodr_2 ._mode_1hodr_37 button:disabled{opacity:.8;border-image-source:url(ui/btn-blue-disabled.webp);color:#cfc6b0}
+._menu_1hodr_2 ._list_1hodr_24 button._primary_1hodr_34,._menu_1hodr_2 ._row_1hodr_46 button._primary_1hodr_34,._menu_1hodr_2 ._mode_1hodr_37 button._primary_1hodr_34{border-image-source:url(ui/btn-gold-normal.webp);text-shadow:0 1px 0 #fff3c880;filter:none}
+._menu_1hodr_2 ._list_1hodr_24 button._primary_1hodr_34:hover:not(:disabled),._menu_1hodr_2 ._row_1hodr_46 button._primary_1hodr_34:hover:not(:disabled),._menu_1hodr_2 ._mode_1hodr_37 button._primary_1hodr_34:hover:not(:disabled){background:none;filter:none;border-image-source:url(ui/btn-gold-hover.webp)}
+._menu_1hodr_2 ._list_1hodr_24 button._primary_1hodr_34:active:not(:disabled),._menu_1hodr_2 ._row_1hodr_46 button._primary_1hodr_34:active:not(:disabled),._menu_1hodr_2 ._mode_1hodr_37 button._primary_1hodr_34:active:not(:disabled){border-image-source:url(ui/btn-gold-active.webp)}
+._menu_1hodr_2 ._list_1hodr_24 button._primary_1hodr_34:disabled,._menu_1hodr_2 ._row_1hodr_46 button._primary_1hodr_34:disabled,._menu_1hodr_2 ._mode_1hodr_37 button._primary_1hodr_34:disabled{border-image-source:url(ui/btn-gold-disabled.webp);color:#3a3326}
+._menu_1hodr_2 ._card_1hodr_37{background:none;border:1px solid transparent;border-radius:0;border-image:url(ui/modal.webp) 60 70 150 70 fill/22px 26px 54px 26px stretch;padding:22px 32px 26px}
