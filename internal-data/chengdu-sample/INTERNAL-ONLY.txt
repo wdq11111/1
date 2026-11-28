@@ -1,0 +1,2 @@
+成都样例区真实数据聚合结果。仅限内部使用，不得公开发布或对外分发。
+原因：含 HydroRIVERS（WWF HydroSHEDS v1 条款）、Copernicus DEM、WorldPop、GHSL、WorldCover、Natural Earth 派生数据，许可状态为 distribution_allowed=internal（见 pipeline/registry/sources.yaml）。
