@@ -1,0 +1,13 @@
+ChinaCiv《华夏文明》Game-3 可玩构建（静态网页，离线运行，需要支持 WebGL2 的浏览器）
+
+这是什么
+- 20 季度“十四五”规划战役。数值是试验情景（游戏参数），不是统计数据。
+- 120 季度完整战役仍然锁定：它需要真实的 2020 年全国数据，目前没有。
+
+发布说明（如实记录）
+- 本页由项目所有者明确决定公开发布。项目自带的公开许可门禁（python3 -m pipeline.cli license-gate --target public）当前结果是 FAIL（72 项），原因是多个数据来源的许可尚未核实。
+- internal-data/ 下的数据文件和各自的 INTERNAL-ONLY.txt 说明保持原样，没有改动；其中的第三方数据（HydroRIVERS、Copernicus DEM、WorldPop、GHSL、WorldCover、Natural Earth）的许可与署名要求以各自来源为准。
+- 地图绘制代码移植自 USACiv（MIT），许可文本见 LICENSE-USACIV.txt。
+
+测试范围（如实记录）
+- 桌面 Chromium、Chromium 的触屏模拟、Linux 版 WebKit 做过自动化验收；iPad 真机和 iPadOS Safari 没有测过，未验证。
